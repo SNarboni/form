@@ -1,4 +1,10 @@
+.container {
+  width: 500px;
+}
+
 .my-bg-gray {
   background-color: #b4b4c8;
   color: black;
+  padding: 100px 30px;
+  text-align: center;
 }

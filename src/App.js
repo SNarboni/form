@@ -1,34 +1,67 @@
 import React from "react";
 import "./App.css";
 import Form from "./component/Form";
-import Submitted from "./component/Submitted";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tkt: 0,
+      email: "",
+      password: "",
+      classEmail: "form-control is-invalid",
+      classPassword: "form-control is-invalid",
+      classButton: "btn btn-primary disabled",
+      emailResult: false,
+      passwordResult: false,
     };
   }
 
-  register = () => {
-    if (this.state.tkt === 0) {
-      return <Form compte={this.count} />;
+  onEmailChange = (e) => {
+    this.setState({ email: e.target.value });
+    let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    if (reg.test(this.state.email)) {
+      this.setState({ classEmail: "form-control is-valid" });
+      this.setState({ emailResult: true });
     } else {
-      return <Submitted />;
+      this.setState({ classEmail: "form-control is-invalid" });
+      this.setState({ emailResult: false });
     }
+    this.buttonUnlock();
+  };
+  onPasswordChange = (a) => {
+    this.setState({ password: a.target.value });
+    if (this.state.password.length > 8) {
+      this.setState({ classPassword: "form-control is-valid" });
+      this.setState({ passwordResult: true });
+    } else {
+      this.setState({ classPassword: "form-control is-invalid" });
+      this.setState({ passwordResult: false });
+    }
+    this.buttonUnlock();
   };
 
-  count = () => {
-    let counter = this.state.tkt;
-    counter++;
-    this.setState({ tkt: counter });
+  buttonUnlock = () => {
+    if (this.state.emailResult === true && this.state.passwordResult === true) {
+      this.setState({ classButton: "btn btn-primary" });
+    } else {
+      this.setState({ classButton: "btn btn-primary disabled" });
+    }
   };
 
   render() {
     return (
       <div className="container">
-        <div className="row">{this.register()}</div>
+        <h1 className="text-center">Login</h1>
+        <main className="row">
+          <Form
+            emailTKT={this.onEmailChange}
+            passwordTKT={this.onPasswordChange}
+            classEmail={this.state.classEmail}
+            classPassword={this.state.classPassword}
+            classButton={this.state.classButton}
+            methode={this.buttonUnlock}
+          />
+        </main>
       </div>
     );
   }
