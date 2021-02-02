@@ -18,24 +18,29 @@ class App extends React.Component {
 
   onEmailChange = (e) => {
     this.setState({ email: e.target.value });
-    let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    let reg = /^\S+@\S+\.\S+$/g;
     if (reg.test(this.state.email)) {
-      this.setState({ classEmail: "form-control is-valid" });
-      this.setState({ emailResult: true });
+      this.setState({ classEmail: "form-control is-valid", emailResult: true });
     } else {
-      this.setState({ classEmail: "form-control is-invalid" });
-      this.setState({ emailResult: false });
+      this.setState({
+        classEmail: "form-control is-invalid",
+        emailResult: false,
+      });
     }
     this.buttonUnlock();
   };
   onPasswordChange = (a) => {
     this.setState({ password: a.target.value });
-    if (this.state.password.length > 8) {
-      this.setState({ classPassword: "form-control is-valid" });
-      this.setState({ passwordResult: true });
+    if (this.state.password.length >= 5) {
+      this.setState({
+        classPassword: "form-control is-valid",
+        passwordResult: true,
+      });
     } else {
-      this.setState({ classPassword: "form-control is-invalid" });
-      this.setState({ passwordResult: false });
+      this.setState({
+        classPassword: "form-control is-invalid",
+        passwordResult: false,
+      });
     }
     this.buttonUnlock();
   };
